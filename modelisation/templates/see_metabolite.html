@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block import_css%}
+    <link rel="stylesheet" href="{% static "css/bootstrap-v2.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/metabolites.css" %}"/>
+    {% endblock %}
+    {% block title %}
+    <title>ModelPath: Metabolite {{ metabolite.id }}</title>
+    {% endblock %}
+</head>
+<body>
+    {% block main_block %}
+    <div class="container jumbotron form-group" id='details'>
+        <center>
+        <h2><strong>{{ metabolite.id }}</strong> : <smaller>{{ metabolite.name }}</smaller></h2>
+        </center>
+        <br>
+        <br>
+        <center>
+        <h6><i>{{ metabolite.summary }}</i></h6>
+        </center>
+        <br>
+        <br>
+        <table class="table table-hover">
+        <tr>
+            <td><strong>Name</strong></td>
+            <td> {{ metabolite.name }} </td>
+        </tr>
+        <tr>
+            <td><strong>Formula</strong></td>
+            <td> {{ metabolite.formula }} <strong>Molecular weight:</strong> {{ metabolite.mol_weight|floatformat:2 }} g/mol</td>
+        </tr>
+        <tr>
+            <td> <img class="2Dmol" src="{% url 'get_image' metabolite.id %}"> </td>
+            <td colspan='2'><div id="container-01" class="mol-container" value={{ metabolite.id }}></div></td>
+        </tr>
+        {% if metabolite.inchikey is not None %}
+        <tr>
+            <td><strong>InChIKey</strong></td>
+            <td> {{ metabolite.inchikey }} </td>
+        </tr>
+        {% endif %}
+        {% if metabolite.smiles is not None %}
+        <tr>
+            <td><strong>SMILES</strong></td>
+            <td> {{ metabolite.smiles }} </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td><strong>External links</strong></td>
+            <td colspan="2"> 
+              <ul>
+                {% if metabolite.bigg is not None %}<li><strong>Bigg: </strong><a id='bigg' href="javascript:;" onclick = "this.href='http://identifiers.org/bigg.metabolite/' + document.getElementById('bigg').textContent">{{ metabolite.bigg }}</a></li>{% endif %}
+                {% if metabolite.mnxm is not None %}<li><strong>MetanetX: </strong><a id='mnxm' href="javascript:;" onclick = "this.href='http://identifiers.org/metanetx.chemical/' + document.getElementById('mnxm').textContent">{{ metabolite.mnxm }}</a></li>{% endif %}
+                {% if metabolite.biocyc is not None %}<li><strong>Biocyc: </strong><a id='biocyc' href="javascript:;" onclick = "this.href='http://identifiers.org/biocyc/' + document.getElementById('biocyc').textContent">{{ metabolite.biocyc }}</a></li>{% endif %}
+                {% if metabolite.chebi is not None %}<li><strong>Chebi: </strong><a id='chebi' href="javascript:;" onclick = "this.href='http://identifiers.org/chebi/' + document.getElementById('chebi').textContent">{{ metabolite.chebi }}</a></li>{% endif %}
+                {% if metabolite.kegg_compound is not None %}<li><strong>Kegg compound: </strong><a id='kegg_c' href="javascript:;" onclick = "this.href='http://identifiers.org/kegg.compound/' + document.getElementById('kegg_c').textContent">{{ metabolite.kegg_compound }}</a></li>{% endif %}
+                {% if metabolite.kegg_drug is not None %}<li><strong>Kegg drug: </strong><a id='kegg_d' href="javascript:;" onclick = "this.href='http://identifiers.org/kegg.drug/' + document.getElementById('kegg_d').textContent">{{ metabolite.kegg_drug }}</a></li>{% endif %}
+                {% if metabolite.hmdb is not None %}<li><strong>HMDB: </strong><a id='hmdb' href="javascript:;" onclick = "this.href='http://identifiers.org/hmdb/' + document.getElementById('hmdb').textContent">{{ metabolite.hmdb }}</a></li>{% endif %}
+                {% if metabolite.sabiork is not None %}<li><strong>Sabiork: </strong><a id='sabiork' href="javascript:;" onclick = "this.href='http://identifiers.org/sabiork.compound/' + document.getElementById('sabiork').textContent">{{ metabolite.sabiork }}</a></li>{% endif %}
+                {% if metabolite.seed is not None %}<li><strong>Seed: </strong><a id='seed' href="javascript:;" onclick = "this.href='http://identifiers.org/seed.compound/' + document.getElementById('seed').textContent">{{ metabolite.seed }}</a></li>{% endif %}
+              </ul>
+            </td>
+        </tr>
+        </table>
+    </div>
+    <br>
+    <!-- Creating 3D rendering of the molecule from pdb file-->
+    <script src="http://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>
+    <div id="container-01" class="mol-container" value={{ metabolite.id }}></div>
+    
+    <script src={% static 'js/3Dmol.js' %}></script>
+    
+{% endblock %}
+</body>
+</html>

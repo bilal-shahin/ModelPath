@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>ModelPath: Reaction {{ reaction.id }}</title>
+    {% endblock %}
+</head>
+<body>
+    {% block main_block %}
+    <div class="container jumbotron form-group">
+        <center>
+        <h2><strong>{{ reaction.id }}</strong> : <smaller>{{ reaction.name }}</smaller></h2>
+        </center>
+        <br>
+        <table class="table table-hover">
+        <tr>
+            <td><strong> ID </strong></td>
+            <td>{{ reaction.id }}</td>
+        </tr>
+        <tr>
+            <td><strong> Name </strong></td>
+            <td>{{ reaction.name }}</td>
+        </tr>
+        {% if reaction.ec_number %}
+        <tr>
+            <td><strong> EC number </strong></td>
+            <td>{{ reaction.ec_number }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td><strong> Subsystem </strong></td>
+            <td>{{ reaction.subsystem }}</td>
+        </tr>
+        <tr>
+            <td><strong>Reactants:</strong></td>
+            <td>
+              <ul>
+            {% for metabolite, stochio in reaction.get_metabolites_stochiometry.items %}
+                {% if stochio < 0 %}
+                <li>
+                  ({{ stochio }})
+                  <a href="{% url 'see_metabolite' metabolite.id %}" style="color:black"> <strong>{{metabolite.id}}:</strong></a>
+                  <em>{{metabolite.name|truncatechars:100}}</em>
+                </li>
+                {% endif %}
+            {% endfor %}
+              </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Products:</strong></td>
+            <td>
+              <ul>
+            {% for metabolite, stochio in reaction.get_metabolites_stochiometry.items %}
+                {% if stochio > 0 %}
+                <li>
+                  ({{ stochio }})
+                  <a href="{% url 'see_metabolite' metabolite.id %}" style="color:black"> <strong>{{metabolite.id}}:</strong></a>
+                  <em>{{metabolite.name|truncatechars:100}}</em>
+                </li>
+                {% endif %}
+            {% endfor %}
+              </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>External links</strong></td>
+            <td colspan="2"> 
+              <ul>
+                {% if reaction.bigg is not None %}<li><strong>Bigg: </strong><a id='bigg' href="javascript:;" onclick = "this.href='http://identifiers.org/bigg.reaction/' + document.getElementById('bigg').textContent">{{ reaction.bigg }}</a></li>{% endif %}
+                {% if reaction.mnxr is not None %}<li><strong>MetanetX: </strong><a id='mnxr' href="javascript:;" onclick = "this.href='http://identifiers.org/metanetx.reaction/' + document.getElementById('mnxr').textContent">{{ reaction.mnxr }}</a></li>{% endif %}
+                {% if reaction.biocyc is not None %}<li><strong>Biocyc: </strong><a id='biocyc' href="javascript:;" onclick = "this.href='http://identifiers.org/biocyc/' + document.getElementById('biocyc').textContent">{{ reaction.biocyc }}</a></li>{% endif %}
+                {% if reaction.kegg is not None %}<li><strong>Kegg: </strong><a id='kegg' href="javascript:;" onclick = "this.href='http://identifiers.org/kegg.reaction/' + document.getElementById('kegg').textContent">{{ reaction.kegg }}</a></li>{% endif %}
+                {% if reaction.rhea is not None %}<li><strong>Rhea: </strong><a id='rhea' href="javascript:;" onclick = "this.href='http://identifiers.org/rhea/' + document.getElementById('rhea').textContent">{{ reaction.rhea }}</a></li>{% endif %}
+                {% if reaction.seed is not None %}<li><strong>Seed: </strong><a id='seed' href="javascript:;" onclick = "this.href='http://identifiers.org/seed.reaction/' + document.getElementById('seed').textContent">{{ reaction.seed }}</a></li>{% endif %}
+              </ul>
+            </td>
+        </tr>
+        </table>
+    </div>
+    {% endblock %}
+</body>
+</html>

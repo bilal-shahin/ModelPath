@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>ModelPath: Models {{ model.id }}</title>
+    {% endblock %}
+</head>
+<body>
+    {% block main_block %}
+    <div class="container jumbotron form-group" id='details'>
+        <center>
+        <h2><strong>{{ model.id }}</strong></h2>
+        </center>
+        <br>
+        <br>
+        <table class="table table-hover">
+        <tr>
+            <td><strong>Organism</strong></td>
+            <td> {{ model.organism }} </td>
+        </tr>
+        <tr>
+            <td><strong>Nb reactions</strong></td>
+            <td> {{ model.nb_reactions }} </td>
+        </tr>
+        <tr>
+            <td><strong>Nb metabolites</strong></td>
+            <td> {{ model.nb_metabolites }} </td>
+        </tr>
+        </table>
+    </div>
+    {% endblock %}
+</body>
+</html>

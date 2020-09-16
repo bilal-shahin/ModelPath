@@ -1,0 +1,16 @@
+HETATM    1 FE1  UNL     1       0.753  -1.502   0.313  1.00  0.00          FE  
+HETATM    2  S1  UNL     1       0.097  -1.181  -0.956  1.00  0.00           S  
+HETATM    3 FE2  UNL     1      -0.382   0.226   1.627  1.00  0.00          FE  
+HETATM    4  S2  UNL     1      -0.408  -0.668   1.491  1.00  0.00           S  
+HETATM    5 FE3  UNL     1       1.018   1.305   0.185  1.00  0.00          FE  
+HETATM    6  S3  UNL     1       1.934  -0.136   0.556  1.00  0.00           S  
+HETATM    7 FE4  UNL     1      -0.259   0.141  -1.322  1.00  0.00          FE  
+HETATM    8  S4  UNL     1       0.147   1.512  -0.165  1.00  0.00           S  
+CONECT    1    2    4    6
+CONECT    2    3    7
+CONECT    3    4    8
+CONECT    4    5
+CONECT    5    6    8
+CONECT    6    7
+CONECT    7    8
+END

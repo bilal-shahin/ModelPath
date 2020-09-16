@@ -1,0 +1,20 @@
+.mol-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+#details img:first-child {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    margin-bottom: auto;
+    border: 1px solid rgb(238, 233, 233);
+    border-radius: 8px;
+    padding: 5px;
+    width: 300;
+    position: relative;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href={% static "images/favicon.png"%} rel="icon" />
+    {% block import_css%}
+    <link rel="stylesheet" href="{% static "css/bootstrap-v2.css" %}"/>
+    {% endblock %}
+    {% block title %}
+    <title>ModelPath</title>
+    {% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <div class="container">
+        <ul class="navbar-nav">
+        <!--Logo PathModel -->
+          <li><a class="navbar-brand" href="{% url 'home' %}"><img src="{% static "images/logo1.png"%}" width="70px" height="70px"></a></li>
+          <li class="nav-item"><a href="{% url 'models' %}" class="nav-link">Models</a></li>
+          <li class="nav-item"><a href="{% url 'reactions' %}" class="nav-link">Reactions</a></li>
+          <li class="nav-item"><a href="{% url 'metabolites'%}" class="nav-link">Metabolites</a></li>
+          <!--<li class="nav-item"><a href="{% url 'genes' %}" class="nav-link">Genes</a></li>
+          <li class="nav-item"><a href="{% url 'escher' %}" class="nav-link">Escher</a></li>-->
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid" style="margin-top:80px">
+    {% block main_block %}
+
+    {% endblock %}
+    </div>
+  </body>
+  {% block scripts %}
+
+  {% endblock %}
+</html>

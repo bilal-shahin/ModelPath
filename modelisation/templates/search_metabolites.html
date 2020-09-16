@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+</head>
+<body>
+    {% block main_block %}
+        <div class="container jumbotron form-group">
+            <h2>Search Metabolites</h2>
+            <br>
+            <br>
+            <form method="POST">
+                {% csrf_token %}
+                {{ search_form.as_p }}
+                <input type="submit" class="btn btn-primary" value="Search">
+            </form>
+            {% if metabolites %}
+                <br>
+                <br>
+                <br>    
+                <p> ***** <strong>{{ metabolites|length }}  metabolite{{ metabolites|pluralize }} found <strong>*****</p>
+            {% endif %}
+        </div>
+    {% if metabolites %}
+        <div class="container jumbotron">
+            <table class="table table-hover" style="width:100%">
+              <thead class="thead-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>InChIKey</th>
+                  <th>Formula</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for metabolite in metabolites %}
+                  <tr>
+                    <td><strong><a href="{% url 'see_metabolite' metabolite.id %}" style="color:black">{{ metabolite.id }}</a></strong></td>
+                    <td>{{ metabolite.name }}</td>
+                    <td>{{ metabolite.inchikey }}</td>
+                    <td>{{ metabolite.formula }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% endif %}
+    
+    {% endblock main_block %}
+</body>
+</html>

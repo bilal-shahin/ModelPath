@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+</head>
+<body>
+    {% block main_block %}
+        <div class="container jumbotron form-group">
+            <h2>Search Reactions</h2>
+            <br>
+            <br>
+            <form method="POST">
+                {% csrf_token %}
+                <table class='table table-borderless'>
+                  <tbody>
+                    <tr class="no-border">
+                      <td><strong>ID/Name</strong></td>
+                      <td><strong>Model</strong></td>
+                    </tr>
+                    <tr class="no-border">
+                      <td>{{search_form.reactions_id}}</td>
+                      <td>{{search_form.reactions_models}}</td>
+                    </tr>
+                    <tr class="no-border">
+                      <td><strong>Substrates</strong></td>
+                      <td><strong>Products</strong></td>
+                    </tr>
+                    <tr class="no-border">
+                      <td>{{search_form.reactions_substrates}}</td>
+                      <td>{{search_form.reactions_products}}</td>
+                    </tr>
+                    <tr class='no-border'>
+                      <td><strong>EC number</strong></td>
+                    </tr>
+                    <tr class='no-border'></tr>
+                      <td>{{search_form.reactions_ec_number}}</td>
+                  </tbody>
+                </table>
+                <br>
+                <input type="submit" class="btn btn-primary" value="Search">
+            </form>
+            {% if reactions %}
+                <br>
+                <br>
+                <br>    
+                <p> ***** <strong>{{ reactions|length }}  reaction{{ reactions|pluralize }} found <strong>*****</p>
+            {% endif %}
+        </div>
+    {% if reactions %}
+        <div class="container jumbotron">
+            <table class="table" style="width:100%">
+              <thead class="thead-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>EC_number</th>
+                  <th>Substrates</th>
+                  <th>Products</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for reaction in reactions %}
+                  <tr>
+                    <td><strong><a href="{% url 'see_reaction' reaction.id %}" style="color:black">{{ reaction.id }}</a></strong></td>
+                    <td>{{ reaction.name }}</td>
+                    <td>{{ reaction.ec_number }}</td>
+                    <td>{% for substrate in  reaction.substrates.all %}<li><a href="{% url 'see_metabolite' substrate.id %}" style="color:black">{{ substrate.id }}</a></li>{% endfor %}</td>
+                    <td>{% for product in  reaction.products.all %}<li><a href="{% url 'see_metabolite' product.id %}" style="color:black">{{ product.id }}</a></li>{% endfor %}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% endif %}
+    
+    {% endblock main_block %}
+</body>
+</html>
